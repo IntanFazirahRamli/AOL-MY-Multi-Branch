@@ -1,0 +1,575 @@
+﻿<%@ master language="VB" inherits="MasterPage" CodeFile="MasterPage.master.vb" %>
+
+<%@ Register Assembly="AjaxControlToolkit" Namespace="AjaxControlToolkit" TagPrefix="asp" %>
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head runat="server">
+    <title></title>
+       <link id="Link1" rel="shortcut icon" href="~/Images/favicon.ico" type="image/x-icon"/>
+                <link id="Link2" rel="icon" href="~/Images/favicon.ico" type="image/ico"/>
+ 
+   <%--  <link href="Style/bootstrap.css" rel="stylesheet" />--%>
+
+
+   <script src="js/jquery-1.8.3.js" type="text/javascript"></script>  
+
+
+    <script type="text/javascript">
+        var sess_pollInterval = 60000;
+        var sess_expirationMinutes = 720;
+        var sess_warningMinutes = 719;
+        var sess_intervalID;
+        var sess_lastActivity;
+
+        function initSession() {
+            sess_lastActivity = new Date();
+            sessSetInterval();
+            //$(document).bind('keypress.session', function (ed, e) {
+            //    sessKeyPressed(ed, e);
+            //});
+        }
+        function sessSetInterval() {
+            sess_intervalID = setInterval('sessInterval()', sess_pollInterval);
+        }
+        function sessClearInterval() {
+            clearInterval(sess_intervalID);
+        }
+        function sessKeyPressed(ed, e) {
+            sess_lastActivity = new Date();
+        }
+        function sessLogOut() {
+            window.location.href = 'Login.aspx';
+        }
+        function sessInterval() {
+            var now = new Date();
+            //get milliseconds of differneces
+            var diff = now - sess_lastActivity;
+            //get minutes between differences
+            var diffMins = (diff / 1000 / 60);
+            if (diffMins >= sess_warningMinutes) {
+                //wran before expiring
+                //stop the timer
+                sessClearInterval();
+                //promt for attention
+                var active=confirm("Session has been idle for extended period of time.\nPlease click OK if you want to continue this session.")
+                //var active = confirm('Your session will expire in ' + (sess_expirationMinutes - sess_warningMinutes) +
+                //    ' minutes (as of ' + now.toTimeString() + '), press OK to remain logged in ' +
+                //    'or press Cancel to log off. \nIf you are logged off any changes will be lost.');
+                if (active == true) {
+                    now = new Date();
+                    diff = now - sess_lastActivity;
+                    diffMins = (diff / 1000 / 60);
+                    if (diffMins > sess_expirationMinutes) {
+                        sessLogOut();
+                    }
+                    else {
+                        initSession();
+                        sessSetInterval();
+                        sess_lastActivity = new Date();
+                    }
+                }
+                else {
+                    sessLogOut();
+                }
+            }
+        }
+</script>
+
+      <script type = "text/javascript">
+          
+         
+     
+
+          //function SessionExpireAlert(timeout) {
+          //    var seconds = timeout / 1000;
+
+          //    document.getElementsByName("secondsIdle").innerHTML = seconds;
+          //    document.getElementsByName("seconds").innerHTML = seconds;
+          //    //setInterval("showMsg()", 10000);
+          //    //setInterval("hideMsg()", 15000);
+          //    setInterval(function () {
+          //        seconds--;
+          //        document.getElementById("seconds").innerHTML = seconds;
+          //        document.getElementById("secondsIdle").innerHTML = seconds;
+          //    }, 1000);
+          //    setinterval(function () {
+          //        setTimeout(function () {
+          //            //Show Popup before 20 seconds of timeout.
+          //            //  $find("mpeTimeout").show();
+          //            var res = confirm("Session has been idle for extended period of time.\nPlease click OK if you want to continue this session.");
+          //            if (res == true) {
+          //                ResetSession();
+          //            }
+          //            else {
+          //                // setTimeout();
+          //            }
+
+
+          //        }, timeout - 20 * 1000);
+
+          //        setTimeout(function () {
+          //            window.location = "Login.aspx";
+          //        }, timeout);
+          //    }, 60000);
+          //};
+          //function ResetSession() {
+          //    //Redirect to refresh Session.
+          //    window.location = window.location.href;
+          //}
+
+          function Confirm() {
+              var confirm_value = document.createElement("INPUT");
+              confirm_value.type = "hidden";
+              confirm_value.name = "confirm_value";
+              if (confirm("Do you want to delete the record?")) {
+                  confirm_value.value = "Yes";
+
+              } else {
+                  confirm_value.value = "No";
+              }
+
+              document.forms[0].appendChild(confirm_value);
+          }
+
+
+          function Confirmvoid() {
+              var confirm_value = document.createElement("INPUT");
+              confirm_value.type = "hidden";
+              confirm_value.name = "confirm_value";
+              if (confirm("Do you want to VOID the record?")) {
+                  confirm_value.value = "Yes";
+
+              } else {
+                  confirm_value.value = "No";
+              }
+
+              document.forms[0].appendChild(confirm_value);
+          }
+
+          function ConfirmSchedule() {
+              var confirm_value = document.createElement("INPUT");
+              confirm_value.type = "hidden";
+              confirm_value.name = "confirm_value";
+              if (confirm("Are you sure to generate Service Schedule?")) {
+                  confirm_value.value = "Yes";
+              } else {
+                  confirm_value.value = "No";
+              }
+              document.forms[0].appendChild(confirm_value);
+          }
+
+
+
+          function stopRKey(evt) {
+              var evt = (evt) ? evt : ((event) ? event : null);
+              var node = (evt.target) ? evt.target : ((evt.srcElement) ? evt.srcElement : null);
+              if ((evt.keyCode == 13) && (node.type == "text")) { return false; }
+          }
+
+          document.onkeypress = stopRKey;
+
+
+
+          //function ShowProgress() {
+          //    setTimeout(function () {
+          //        var modal = $('<div />');
+          //        modal.addClass("modal");
+          //        $('body').append(modal);
+          //        var loading = $(".loading");
+          //        loading.show();
+          //        var top = Math.max($(window).height() / 2 - loading[0].offsetHeight / 2, 0);
+          //        var left = Math.max($(window).width() / 2 - loading[0].offsetWidth / 2, 0);
+          //        loading.css({ top: top, left: left });
+          //    }, 200);
+          //}
+          //$('form').live("submit", function () {
+          //    ShowProgress();
+          //});
+
+          </script>
+       
+     <link type="text/css" rel="stylesheet" href="CSS/menuTemplate3.css" />
+
+    
+    <style type="text/css">
+
+    .CellFormatADM{
+        font-size:15px;
+        font-weight:bold;
+        font-family:'Calibri';
+        color:black;
+        text-align:right;
+        vertical-align:top;
+        /*width:30%;*/
+        /*table-layout:fixed;
+        overflow:hidden;*/
+          border-collapse: collapse;
+              border-spacing: 0;
+              line-height:10px;
+    }
+      .CellTextBoxADM{
+        
+        color:black;
+        text-align:left;
+     padding-left:20px;
+      font-size:15px;
+        font-weight:bold;
+        font-family:'Calibri';
+    }
+  
+          .CellFormat{
+        font-size:15px;
+        font-weight:bold;
+        font-family:'Calibri';
+        color:black;
+        text-align:right;
+        width:30%;
+        /*table-layout:fixed;
+        overflow:hidden;*/
+          border-collapse: collapse;
+              border-spacing: 0;
+              line-height:10px;
+    }
+      .CellTextBox{
+          padding-left:20px;
+        color:black;
+        text-align:left;
+        /*width:20%;*/
+        /*table-layout:fixed;
+        overflow:hidden;*/
+          /*border-collapse: collapse;
+              border-spacing: 0;
+              line-height:10px;*/
+    }
+        .alignleft {
+	float: left;
+}
+.alignright {
+	float: right;
+}
+
+          .Centered
+{
+    margin: 0 auto;
+}
+        .button {
+            margin-right:10px;
+            border-radius:1px; 
+            box-shadow: 2px 2px 1px #808080; 
+            height:30px;
+            width:100px;
+        }
+        .roundbutton {
+            border: 2px solid #a1a1a1;   
+    background: #dddddd;   
+    border-radius: 25px;
+        }
+          .dummybutton {
+          display: none;
+      }
+           .visiblebutton {
+          display: inline;
+      }    
+.modalBackground
+{
+background-color: gray;
+filter: alpha(opacity=80);
+opacity: 0.8;
+z-index: 10000;
+}
+
+   .roundbutton1 {
+            border: 2px solid #a1a1a1;   
+    background: #dddddd;   
+    border-radius: 25px;
+    height:30px;
+    width:100px;
+        }
+</style>
+
+   
+
+    <asp:ContentPlaceHolder id="head" runat="server">
+    </asp:ContentPlaceHolder>
+</head>
+<%--<body style="background-color:navy;">--%>
+    <body onload="initSession()">
+    <form id="form1" runat="server" style="width:100%;">
+       
+     <%--<asp:ToolkitScriptManager ID="ToolkitScriptManager1" runat="server" ScriptMode="Release">
+            <ControlBundles>
+                <asp:controlBundle name="ModalPopupExtender_Bundle"/> 
+            </ControlBundles>
+        </asp:ToolkitScriptManager>--%>
+         <asp:Label ID="lblUserID" runat="server" Text="Label" Visible="False"></asp:Label>
+        
+  <asp:Label ID="lblID" runat="server" Text="Label" Visible="False"></asp:Label>
+         <asp:Label ID="lblName" runat="server" Text="Label" Visible="False"></asp:Label>
+        
+       <table style="color: #fff;width:99%">
+           <tr style="vertical-align: top; padding-top: 0px;">
+               <td style="width:20%;padding-left:5px;"><a runat="server" id="link" href="http://sg.axpestonline.com/Anticimex/Home.aspx"><img src="Images/Anticimex1.png" width="290" height="45" border="0"/>
+</a>
+                   <br />
+       <div style="padding-left:100px;"> <asp:Label ID="lblDomainName" runat="server" Font-Names="Calibri" Font-Size="18px" Font-Bold="True" ForeColor="#000099"></asp:Label>
+            </div>
+                 </td><td style="width:80%;padding-top:1px;"> 
+                      
+                         
+       <ul class="menuTemplate3 decor3_1">
+    <li><a href="#" id="href_admin"  runat="server" style="width: 8%;">Administration</a>
+         <div class="drop decor3_2" style="width: 550px;">
+            <div class='left'>
+                <div>
+                    <a href="Master_Bank.aspx" id="href_master_bank"  runat="server">Bank</a><br />    
+                    <a href="BatchEmail.aspx" id="href_master_batchemail"  runat="server">Batch Email Service Report</a><br />  
+                       <a href="Master_BillingCode.aspx" id="href_master_billingcode"  runat="server">Billing Codes</a><br />               
+                       <a href="Master_COA.aspx"  id="href_master_coa"  runat="server">Chart of Accounts</a><br />
+                    <a href="Master_Chemical.aspx"  id="href_master_chemical"  runat="server">Chemicals</a><br />
+                       <a href="Master_City.aspx"  id="href_master_city"  runat="server">City</a><br />
+                       <a href="Master_CompanyGroup.aspx"  id="href_master_companygroup"  runat="server">Company Group</a><br />
+                      <a href="Master_ContractCode.aspx"  id="href_master_contractcode"  runat="server">Contract Code</a><br />
+                     
+                      <a href="Master_ContractGroup.aspx"  id="href_master_contractgroup"  runat="server">Contract Group</a><br />
+                      
+                      <a href="Master_ContractGroupCategory.aspx"  id="href_master_contractgroupcategory"  runat="server">Contract Group Category</a><br />
+                       <a href="Master_Country.aspx"  id="href_master_country"  runat="server">Country</a><br />
+                       <a href="Master_Currency.aspx"  id="href_master_currency"  runat="server">Currency</a><br />
+                        <a href="Master_DocumentType.aspx"  id="href_master_DocumentType"  runat="server" visible="true">Document Type</a><br />
+                 
+                       <a href="Eventlog.aspx"  id="href_master_eventlog"  runat="server">Event Log</a><br />
+                       <a href="Master_Industry.aspx"  id="href_master_industry"  runat="server">Industry</a><br />
+                       <a href="Master_InvoiceFrequency.aspx"  id="href_master_invoicefrequency"  runat="server">Invoice Frequency</a><br />
+
+                         <a href="Master_HoldCode.aspx"  id="href_master_HoldCode"  runat="server">Hold Code</a><br />
+                
+                       <a href="Master_Holiday.aspx"  id="href_master_holiday"  runat="server">Holiday</a><br />
+                       <a href="Master_LocationGroup.aspx"  id="href_master_locationgroup"  runat="server">Location Group</a><br />
+                       <a href="LockServiceRecord.aspx" id="href_master_lockservicerecord"  runat="server">Lock Service Record</a><br />
+                       <a href="LoginLog.aspx"  id="href_master_loginlog"  runat="server">Login Log</a><br />
+
+                       <a href="ServiceMassChange.aspx"  id="href_master_servicemasschange"  runat="server">Mass Change of Service Details</a><br />
+                       <a href="SalesmanMassChange.aspx" id="href_master_salesmanmasschange"  runat="server">Mass Change of Salesman</a><br />
+                     
+                        <a href="Master_MarketSegment.aspx"  id="href_master_marketsegment"  runat="server">Market Segment</a><br />   
+                                      
+                      <a href="Master_MobileDevice.aspx"  id="href_master_mobiledevice"  runat="server">Mobile Device</a><br />
+                     <a href="Master_MobileDeviceEndPoint.aspx"  id="href_master_mobiledeviceEndpoint"  runat="server">Mobile Device EndPoints</a><br />
+                       
+                    <a href="Master_NotesTemplate.aspx" id="href_master_notestemplate"  runat="server">Notes Template</a><br /> 
+                     <a href="Master_Period.aspx" id="href_master_period"  runat="server">Period</a><br /> 
+                     <a href="Master_Location.aspx"  id="href_master_location"  runat="server" visible="true">Branch/Location</a><br />
+                       <a href="Master_SubBranch.aspx"  id="href_master_subbranch"  runat="server" visible="true">SubBranch</a><br />
+                  
+                           
+                         <a href="Master_PostalToLocation.aspx"  id="href_master_postaltolocation"  runat="server">Postal to Location</a><br />
+                       <a href="Master_ScheduleType.aspx"  id="href_master_scheduletype"  runat="server">Schedule Type</a><br />
+                       <a href="Master_ServiceAction.aspx"  id="href_master_serviceaction"  runat="server">Service Action</a><br />
+                    
+                       <a href="Master_ServiceFrequency.aspx"  id="href_master_servicefrequency"  runat="server">Service Frequency</a><br />
+                 <%--     <a href="Master_ServiceRecordSetup.aspx"  id="href_master_servicerecordsetup"  runat="server">ServiceModule Setup</a><br />--%>
+                       <a href="Master_Service.aspx"  id="href_master_service"  runat="server">Service Master</a><br />
+           
+                      </div>
+                </div>
+              <div class='left'>
+                <div>   
+                        
+                     <a href="Master_ServiceTypeSegment.aspx"  id="href_master_servicetypesegment"  runat="server">Service Type</a><br /> 
+                      <a href="Master_SettleType.aspx"  id="href_master_settletype"  runat="server">Settlement Type</a><br />   
+                     <a href="Master_CompanySetup.aspx"  id="href_master_companysetup"  runat="server">Setup - Company</a><br />
+                   
+                     
+                      <a href="Master_ContactSetup.aspx" id="href_master_contactsetup" runat="server">Setup - Customer Module </a><br />
+                    <a href="Master_ServiceRecordSetup.aspx"  id="href_master_OPSModuleSetup"  runat="server">Setup - Contract & Service Module</a><br />
+                      <a href="Master_ARModuleSetup.aspx"  id="href_master_ARModuleSetup"  runat="server">Setup - AR Module</a><br />
+               <a href="Master_AssetSetup.aspx"  id="href_master_AssetSetup"  runat="server">Setup - Asset Module</a><br />
+              
+                       <a href="Master_LogDetailsSetup.aspx"  id="href_master_LogDetailsSetup"  runat="server">Setup - Log Details</a><br />
+                   
+                    <a href="EmailSetup.aspx"  id="href_master_emailsetup"  runat="server">Setup - Email Template</a><br /> 
+                       <a href="Master_SMSSetup.aspx"  id="href_master_SMSSetup"  runat="server">Setup - SMS Template</a><br />
+              
+                       <a href="Master_Staff.aspx"  id="href_master_staff"  runat="server">Staff</a><br />
+                      <a href="Master_StaffCode.aspx"  id="href_master_staffCode"  runat="server">Staff Code</a><br />
+                       <a href="Master_State.aspx"  id="href_master_state"  runat="server">State</a><br />
+                       <a href="Master_Target.aspx"  id="href_master_target"  runat="server">Target</a><br />
+                       <a href="Master_TaxRate.aspx"  id="href_master_taxrate"  runat="server">Tax Rate</a><br />
+                       <a href="Master_Team.aspx"  id="href_master_team"  runat="server">Team</a><br />
+                       <a href="Master_TerminationCode.aspx"  id="href_master_terminationcode"  runat="server">Termination Code</a><br />
+                       <a href="Master_Terms.aspx"  id="href_master_terms"  runat="server">Terms</a><br />
+                       <a href="Master_UOM.aspx"  id="href_master_uom"  runat="server">UOM</a><br />
+                       <a href="UserAccess.aspx"  id="href_master_useraccess"  runat="server">User Access</a><br />
+                       <a href="Master_Vehicle.aspx"  id="href_master_vehicle"  runat="server">Vehicle</a><br />
+                     <a href="Master_Stock.aspx"  id="href_master_stock"  runat="server">Stock Item</a><br />
+                      <a href="CustomerPortal.aspx"  id="href_CustomerPortal"  runat="server">Customer Portal</a><br />
+                     <a href="ContractBatchPriceChange.aspx"  id="href_ContractBatchPriceChange"  runat="server">Contract Batch Price Change</a><br />
+                    <%--<a href="TestAutoEmail.aspx"  id="href_AutoEmail"  runat="server">Email O/S Invoice</a>--%><br />
+                <a href="DeviceType.aspx"  id="href_master_devicetype"  runat="server">Device Type </a><br />
+                    <a href="DeviceEventThreshold.aspx"  id="href_master_deviceeventthreshold"  runat="server">Device Event Threshold </a><br />
+                    
+                    <a href="Master_Pest.aspx"  id="href_master_pest"  runat="server">Pest </a><br />
+                    <a href="Master_PestLevelofInfestation.aspx"  id="href_master_pestlevelofinfestation"  runat="server">Pest Level of Infestation </a><br />
+                    <a href="Master_PestGender.aspx"  id="href_master_pestgender"  runat="server">Pest Gender</a><br />
+                    <a href="Master_PestLifeStage.aspx"  id="href_master_pestlifestage"  runat="server">Pest Life Stage</a><br />
+                    <a href="Master_PestSpecies.aspx"  id="href_master_pestspecies"  runat="server">Pest Species</a><br />
+                    <a href="Master_TrapType.aspx"  id="href_master_pesttraptype"  runat="server">Pest Trap type </a><br />
+          
+                   </div>
+            </div>
+            
+        </div>
+    </li>
+    <li class="separator"></li>
+
+  
+
+
+    <li><a href="#Horizontal-Menus" id="href_customer"  runat="server" class="arrow" style="width: 8%;">Customer</a>
+        <div class="drop decor3_2" style="width: 110px;">
+            <div class='left'>
+               
+                <div>
+                    <a href="Company.aspx"  id="href_master_company"  runat="server">Corporate</a><br />
+                    <a href="Person.aspx"  id="href_master_person"  runat="server">Residential</a><br />
+                 
+                </div>
+            </div>
+            
+        </div>
+    </li>
+
+ <li class="separator"></li>
+   
+           
+    <%--  <li><a href="DashboardSummary.aspx"  id="href_dashboardSummary"  runat="server">DB Summary</a></li>
+    <li class="separator"></li>
+           
+
+   <li><a href="Dashboard.aspx" id="href_dashboard"   runat="server" >SMART</a></li>
+    
+
+         <li class="separator"></li>--%>
+    <li><a href="#Horizontal-Menus" id="href_tools"  runat="server" class="arrow" style="width: 8%;">Tools</a>
+        <div class="drop decor3_2" style="width: 250px;">
+            <div class='left'>
+               
+                <div>
+                    <a href="AddressVerification.aspx"  id="href_address"  runat="server">Address Verification</a><br />
+                    <a href="CustomerList.aspx"  id="href_customerlist"  runat="server">Floor Plan</a><br />
+                    <a href="ExcelDataImport.aspx"  id="href_DataImport"  runat="server">Excel Import Template</a><br />
+                
+                </div>
+            </div>
+            
+        </div>
+    </li>
+
+
+    <li class="separator"></li>
+
+            <li><a href="#Horizontal-Menus" id="href_Asset"  runat="server" class="arrow" style="width: 8%;">Asset</a>
+        <div class="drop decor3_2" style="width: 200px;">
+            <div class='left'>
+               
+                <div>
+                  
+                 <a href="AssetModule.aspx"  id="href_AssetModule"  runat="server">Asset</a><br />
+                      <a href="Supplier.aspx"  id="href_AssetSupplier"  runat="server">Supplier</a><br />
+                      <a href="Master_AssetBrand.aspx"  id="href_AssetBrand"  runat="server">Asset Brand</a><br />
+                       <a href="Master_AssetClass.aspx"  id="href_AssetClass"  runat="server">Asset Class</a><br />
+                     <a href="Master_AssetColor.aspx"  id="href_AssetColor"  runat="server">Asset Color</a><br />
+                     <a href="Master_AssetGroup.aspx"  id="href_AssetGroup"  runat="server">Asset Group</a><br />
+                       <a href="Master_AssetModel.aspx"  id="href_AssetModel"  runat="server">Asset Model</a><br />
+                     <a href="Master_AssetStatus.aspx"  id="href_AssetStatus"  runat="server">Asset Status</a><br />
+                     <a href="Master_MovementType.aspx"  id="href_AssetMovementType"  runat="server">AssetMovementType</a><br />
+                </div>
+            </div>
+            
+        </div>
+    </li>
+
+ <li class="separator"></li>
+
+    <a href="#" id="href_project"  runat="server"></a>
+
+                          <%--   <li class="separator"></li>--%>
+    <li><a href="Contract.aspx" id="href_contract"  runat="server" style="width: 8%;">Contract</a></li>
+
+
+    <li class="separator"></li>
+    <li><a href="Service.aspx" id="href_service"   runat="server" style="width: 8%;">Service</a></li>
+    <li class="separator"></li>
+   <li><a href="#Horizontal-Menus" id="href_armodule"  runat="server" class="arrow" style="width: 28%;">ARModule</a>
+        <div class="drop decor3_2" style="width: 220px;">
+            <div class='left'>
+               
+                <div>
+                     <a href="InvoiceSchedule.aspx"  id="href_invoiceschedule"  runat="server">Batch Invoice</a><br />
+                      <a href="Invoice.aspx"  id="href_invoice"  runat="server">Invoice</a><br />     
+                          <a href="CI.aspx"  id="A1"  runat="server">Consolidated Invoice</a><br />     
+                                 
+                           
+                    <a href="Receipts.aspx"  id="href_receipts"  runat="server">Receipts</a><br />
+                    <a href="CN.aspx"  id="href_cn"  runat="server">Credit Note / Debit Note</a><br />
+                     <a href="AdjustmentNote.aspx"  id="href_adjustmentnote"  runat="server">Adjustment Note</a>
+                    <a href="CNProgressBilling.aspx"  id="href_cnprogressbilling"  runat="server" visible="false"></a>
+                     <a href="InvoiceProgressBilling.aspx"  id="href_invoiceprogressbilling" visible="false" runat="server"></a>
+                   
+                </div>
+            </div>
+            
+        </div>
+    </li>
+<li class="separator"></li>
+
+      <li><a href="ReportHome.aspx" id="href_reports"  runat="server" class="arrow" style="width: 7%;">Reports</a>
+    <%--   <div class="drop decor3_2" style="width: 250px;">
+            <div class='left'>
+               
+                <div>
+                    <a href="Reports.aspx">Report Menu</a><br />
+              
+                 
+                </div>
+            </div>
+            
+        </div>--%>
+    </li>
+ <li class="separator"></li>
+    <li><a href="Login.aspx" style="width: 9%;">Logout</a></li>
+                             </ul>
+ 
+                  <div style="text-align:right;padding-top:5px;"> 
+                     
+                                <asp:Label ID="lblWelcome" runat="server" Text="Label" Font-Bold="True" Font-Names="Tahoma, Geneva, sans-serif" Font-Size="12" ForeColor="#00CCFF"></asp:Label> 
+                      <br />
+                      <asp:LinkButton ID="lnkChangePassword" runat="server" Font-Bold="true" Font-Names="Tahoma, Geneva, sans-serif" Font-Size="8" ForeColor="#CC3300">Change Password</asp:LinkButton>
+                  </div>         
+
+                      </td>
+
+           </tr>
+       <tr><td colspan="2" style="text-align:center">
+        <asp:ContentPlaceHolder id="ContentPlaceHolder1" runat="server">
+        
+        </asp:ContentPlaceHolder>
+        </td>       </tr>       </table>
+        </div>
+        <div style="text-align:right; font-family: Calibri; font-size: 14px; vertical-align: top;height:20px;background-color:beige;padding-top:60px;"><br />
+       <p class="alignleft"> System Date : <asp:TextBox ID="lblSysDate" runat="server" BorderStyle="None" Font-Names="Calibri"></asp:TextBox></p>
+            <p class="alignright">Version dated 24/04/2021    </p></div>
+   <%-- <div style="text-align:right; font-family: Calibri; font-size: small; vertical-align: top;height:20px;background-color:beige;padding-top:60px;">
+               Copyright <asp:Label ID="Label1" runat="server" Text="Label"></asp:Label> @ CWBINFOTECH PTE LTD. All Right Reserved.<asp:Image ID="Image1" runat="server" ImageAlign="Right" ImageUrl="~/Images/cwb.png" />
+           </div>--%>
+       <div id="divMsg" style="position:absolute;left:200px;top:200px;display:none; border:1px solid silver;margin:10px">
+will expire, press the button in 5 sec.<button onclick=''>Continue</button>
+</div>
+
+    
+    </form>
+        
+</body>
+</html>

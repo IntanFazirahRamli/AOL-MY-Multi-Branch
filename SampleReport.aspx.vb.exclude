@@ -1,0 +1,192 @@
+﻿Imports MySql.Data
+Imports MySql.Data.MySqlClient
+Imports System.Data
+Imports System.Data.SqlClient
+Imports System.Web.UI.WebControls
+Imports System.IO
+Imports System.Configuration
+Imports iTextSharp.text
+Imports iTextSharp.text.html.simpleparser
+Imports iTextSharp.text.pdf
+
+
+
+Partial Class SampleReport
+    Inherits System.Web.UI.Page
+    Dim totalCount As Integer = 0
+
+    Protected Sub Page_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
+        If Not IsPostBack Then
+         
+            bindData()
+        End If
+        Dim cols As String() = New String(2) {}
+        cols(0) = "locategrp"
+        cols(1) = "industry"
+        Dim helper As New GridViewHelper(Me.GridView1)
+        helper.RegisterGroup("locategrp", True, False)
+        helper.RegisterSummary("locategrp", SummaryOperation.Count, "locategrp")
+        AddHandler helper.GroupSummary, AddressOf helper_GroupSummary
+
+        AddHandler helper.GroupHeader, AddressOf helper_GroupHeader
+        helper.ApplyGroupSort()
+
+    End Sub
+
+
+    Private Sub helper_GroupSummary(groupName As String, values As Object(), row As GridViewRow)
+        row.Cells(0).HorizontalAlign = HorizontalAlign.Right
+        row.BackColor = System.Drawing.Color.LightGray
+        row.Cells(0).Text = "No. of Records "
+        row.Cells(1).HorizontalAlign = HorizontalAlign.Center
+        row.ForeColor = System.Drawing.Color.Brown
+        row.Font.Bold = True
+
+    End Sub
+
+    Private Sub helper_GroupHeader(groupName As String, values As Object(), row As GridViewRow)
+        If groupName = "industry" Then
+            row.BackColor = System.Drawing.Color.LightGray
+            row.Cells(0).Text = "&nbsp;&nbsp;" + row.Cells(0).Text
+        ElseIf groupName = "locategrp" Then
+            row.HorizontalAlign = HorizontalAlign.Center
+            row.Font.Bold = True
+            row.BackColor = System.Drawing.Color.FromArgb(236, 236, 236)
+            '   row.Cells(0).Text = "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;" + row.Cells(0).Text
+        End If
+    End Sub
+
+    Protected Sub Button1_Click(sender As Object, e As EventArgs) Handles Button1.Click
+        GridView1.AllowPaging = False
+
+        Response.ClearContent()
+        Response.Buffer = True
+        Response.AddHeader("content-disposition", String.Format("attachment; filename={0}", "Customers.xls"))
+        Response.ContentType = "application/ms-excel"
+        Dim sw As New StringWriter()
+        Dim htw As New HtmlTextWriter(sw)
+        ' gvDetails.AllowPaging = False
+        bindData()
+
+        'Change the Header Row back to white color
+        GridView1.HeaderRow.Style.Add("background-color", "#FFFFFF")
+        'Applying stlye to gridview header cells
+        For i As Integer = 0 To GridView1.HeaderRow.Cells.Count - 1
+            GridView1.HeaderRow.Cells(i).Style.Add("background-color", "lightgray")
+        Next
+
+        GridView1.RenderControl(htw)
+        Response.Write(sw.ToString())
+        Response.[End]()
+        GridView1.AllowPaging = True
+
+    End Sub
+
+ Public Overrides Sub VerifyRenderingInServerForm(ByVal control As Control)
+        ' Verifies that the control is rendered
+
+    End Sub
+    Public Sub bindData()
+        Dim conn As MySqlConnection = New MySqlConnection()
+
+        conn.ConnectionString = ConfigurationManager.ConnectionStrings("sitadataConnectionString").ConnectionString
+
+        conn.Open()
+
+        Dim qry As String = "select id,name,industry,UPPER(locategrp) AS locategrp from tblcompany limit 100"
+
+        Dim ds As New DataSet()
+        Dim adapter As New MySqlDataAdapter(qry, conn)
+        '  MessageBox.Message.Alert(Page, val.ToString + " " + txtHidden.Value.ToString, "str")
+        adapter.Fill(ds)
+        SqlDataSource1.SelectCommand = qry
+
+        GridView1.DataSourceID = "SqlDataSource1"
+
+        GridView1.DataBind()
+        conn.Close()
+
+     
+
+    End Sub
+
+    Protected Sub Button2_Click(sender As Object, e As EventArgs) Handles Button2.Click
+        Using sw As New StringWriter()
+            Using hw As New HtmlTextWriter(sw)
+                'To Export all pages
+                GridView1.AllowPaging = False
+                bindData()
+
+
+                GridView1.RenderControl(hw)
+                Dim sr As New StringReader(sw.ToString())
+                Dim pdfDoc As New Document(PageSize.A2, 10.0F, 10.0F, 10.0F, 0.0F)
+                Dim htmlparser As New HTMLWorker(pdfDoc)
+                PdfWriter.GetInstance(pdfDoc, Response.OutputStream)
+                pdfDoc.Open()
+                htmlparser.Parse(sr)
+                pdfDoc.Close()
+
+                Response.ContentType = "application/pdf"
+                Response.AddHeader("content-disposition", "attachment;filename=GridViewExport.pdf")
+                Response.Cache.SetCacheability(HttpCacheability.NoCache)
+                Response.Write(pdfDoc)
+                Response.[End]()
+            End Using
+        End Using
+    End Sub
+
+    Protected Sub Button3_Click(sender As Object, e As EventArgs) Handles Button3.Click
+
+        GridView1.PagerSettings.Visible = False
+        GridView1.DataBind()
+        Dim sw As New StringWriter()
+        Dim hw As New HtmlTextWriter(sw)
+        GridView1.RenderControl(hw)
+        Dim gridHTML As String = sw.ToString().Replace("""", "'").Replace(System.Environment.NewLine, "")
+        Dim sb As New StringBuilder()
+        sb.Append("<script type = 'text/javascript'>")
+        sb.Append("window.onload = new function(){")
+        sb.Append("var printWin = window.open('', '', 'left=0")
+        sb.Append(",top=0,width=1000,height=600,status=0');")
+        sb.Append("printWin.document.write(""")
+        sb.Append(gridHTML)
+        sb.Append(""");")
+        sb.Append("printWin.document.close();")
+        sb.Append("printWin.focus();")
+        sb.Append("printWin.print();")
+        sb.Append("printWin.close();};")
+        sb.Append("</script>")
+        ClientScript.RegisterStartupScript(Me.[GetType](), "GridPrint", sb.ToString())
+        GridView1.PagerSettings.Visible = True
+        GridView1.DataBind()
+    End Sub
+
+    Protected Sub Button4_Click(sender As Object, e As EventArgs) Handles Button4.Click
+        GridView1.AllowPaging = False
+        GridView1.DataBind()
+        Dim sw As New StringWriter()
+        Dim hw As New HtmlTextWriter(sw)
+        GridView1.RenderControl(hw)
+        Dim gridHTML As String = sw.ToString().Replace("""", "'") _
+             .Replace(System.Environment.NewLine, "")
+        Dim sb As New StringBuilder()
+        sb.Append("<script type = 'text/javascript'>")
+        sb.Append("window.onload = new function(){")
+        sb.Append("var printWin = window.open('', '', 'left=0")
+        sb.Append(",top=0,width=1000,height=1000,status=0');")
+        sb.Append("printWin.document.write(""")
+        sb.Append(gridHTML)
+        sb.Append(""");")
+        sb.Append("printWin.document.close();")
+        sb.Append("printWin.focus();")
+        sb.Append("printWin.print();")
+        sb.Append("printWin.close();};")
+        sb.Append("</script>")
+        ClientScript.RegisterStartupScript(Me.[GetType](), "GridPrint", sb.ToString())
+        GridView1.AllowPaging = True
+        GridView1.DataBind()
+    End Sub
+
+   
+End Class

@@ -1,0 +1,773 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:tns="http://tempuri.org/" xmlns:s="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tm="http://microsoft.com/wsdl/mime/textMatching/" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" targetNamespace="http://tempuri.org/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsdl:types>
+    <s:schema elementFormDefault="qualified" targetNamespace="http://tempuri.org/">
+      <s:element name="SendSMS">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="EWUserEmail" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="secretPwd" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="toMobile" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="recipientName" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="senderID" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="smsText" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="interfaceName" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="SendSMSResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="SendSMSResult" type="tns:ResultCodes" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:simpleType name="ResultCodes">
+        <s:restriction base="s:string">
+          <s:enumeration value="OK" />
+          <s:enumeration value="InvalidUser" />
+          <s:enumeration value="ExceedQuota" />
+          <s:enumeration value="ErrorInInsert" />
+          <s:enumeration value="InvalidGroup" />
+          <s:enumeration value="ExceedDivisionQuota" />
+          <s:enumeration value="InvalidBatch" />
+          <s:enumeration value="InvalidMobileNo" />
+          <s:enumeration value="InvalidSenderID" />
+          <s:enumeration value="InvalidExpiryPeriod" />
+          <s:enumeration value="ChannelNameEmpty" />
+          <s:enumeration value="InvalidMMS" />
+          <s:enumeration value="FileSizeExceeded" />
+          <s:enumeration value="MMSSubjectEmpty" />
+          <s:enumeration value="SMSTextEmptyCanNotAccept" />
+          <s:enumeration value="MMSFileNameOrSizeInvalid" />
+          <s:enumeration value="MMSFileInsertFail" />
+        </s:restriction>
+      </s:simpleType>
+      <s:element name="SendSMS2">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="userName" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="password" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="toMobile" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="recipientName" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="senderID" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="smsText" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="SMSType" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="Apptype" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="taskName" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="timeOffset" type="s:long" />
+            <s:element minOccurs="1" maxOccurs="1" name="priority" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="SendSMS2Response">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="SendSMS2Result" type="tns:ResultCodes" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="SendOTPSMS">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="userName" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="password" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="toMobile" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="recipientName" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="senderID" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="smsText" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="SMSType" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="taskName" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="SendOTPSMSResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="SendOTPSMSResult" type="tns:ResultCodes" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="SendOTPSMSWithExpiry">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="userName" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="password" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="toMobile" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="recipientName" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="senderID" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="smsText" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="SMSType" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="taskName" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="ExpiryPeriod" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="SendOTPSMSWithExpiryResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="SendOTPSMSWithExpiryResult" type="tns:ResultCodes" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="SendSMSWithFK">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="userName" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="password" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="toMobile" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="recipientName" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="senderID" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="smsText" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="SMSType" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="Apptype" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="taskName" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="timeOffset" type="s:long" />
+            <s:element minOccurs="1" maxOccurs="1" name="priority" type="s:int" />
+            <s:element minOccurs="0" maxOccurs="1" name="ExternalApplFK" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="SendSMSWithFKResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="SendSMSWithFKResult" type="tns:ResultCodes" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="SendBulkSMSSameMsg">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="userName" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="password" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="toMobile" type="tns:ArrayOfString" />
+            <s:element minOccurs="0" maxOccurs="1" name="recipientName" type="tns:ArrayOfString" />
+            <s:element minOccurs="0" maxOccurs="1" name="senderID" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="smsText" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="smsType" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="appType" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="taskName" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="timeOffset" type="s:long" />
+            <s:element minOccurs="1" maxOccurs="1" name="priority" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="ArrayOfString">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="string" nillable="true" type="s:string" />
+        </s:sequence>
+      </s:complexType>
+      <s:element name="SendBulkSMSSameMsgResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="SendBulkSMSSameMsgResult" type="tns:BulkResult" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="BulkResult">
+        <s:sequence>
+          <s:element minOccurs="1" maxOccurs="1" name="IsSuccess" type="s:boolean" />
+          <s:element minOccurs="1" maxOccurs="1" name="ErrorCode" type="tns:ResultCodes" />
+          <s:element minOccurs="0" maxOccurs="1" name="ProcessingResult" type="tns:ArrayOfResultCodes" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="ArrayOfResultCodes">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="ResultCodes" type="tns:ResultCodes" />
+        </s:sequence>
+      </s:complexType>
+      <s:element name="SendBulkSMSDifferentMsg">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="userName" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="password" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="toMobile" type="tns:ArrayOfString" />
+            <s:element minOccurs="0" maxOccurs="1" name="recipientName" type="tns:ArrayOfString" />
+            <s:element minOccurs="0" maxOccurs="1" name="senderID" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="smsText" type="tns:ArrayOfString" />
+            <s:element minOccurs="0" maxOccurs="1" name="smsType" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="appType" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="taskName" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="timeOffset" type="s:long" />
+            <s:element minOccurs="1" maxOccurs="1" name="priority" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="SendBulkSMSDifferentMsgResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="SendBulkSMSDifferentMsgResult" type="tns:BulkResult" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="CheckQuota">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="userName" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="password" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="CheckQuotaResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="CheckQuotaResult" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="SMSUsed">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="userName" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="password" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="SMSUsedResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="SMSUsedResult" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="SendSMSWithExpiryPeriod">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="userName" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="password" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="toMobile" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="recipientName" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="senderID" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="smsText" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="SMSType" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="Apptype" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="taskName" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="timeOffset" type="s:long" />
+            <s:element minOccurs="1" maxOccurs="1" name="priority" type="s:int" />
+            <s:element minOccurs="0" maxOccurs="1" name="ExternalApplFK" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="ExpiryPeriod" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="SendSMSWithExpiryPeriodResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="SendSMSWithExpiryPeriodResult" type="tns:ResultCodes" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="SendBulkIPSMSSameMsg">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="userName" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="password" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="toMobile" type="tns:ArrayOfString" />
+            <s:element minOccurs="0" maxOccurs="1" name="recipientName" type="tns:ArrayOfString" />
+            <s:element minOccurs="0" maxOccurs="1" name="senderID" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="smsText" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="SMSType" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="Apptype" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="taskName" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="timeOffset" type="s:long" />
+            <s:element minOccurs="1" maxOccurs="1" name="priority" type="s:int" />
+            <s:element minOccurs="0" maxOccurs="1" name="ExternalApplFK" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="ChannelName" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="SendBulkIPSMSSameMsgResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="SendBulkIPSMSSameMsgResult" type="tns:BulkResult" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="SendBulkIPSMSDifferentMsg">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="userName" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="password" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="toMobile" type="tns:ArrayOfString" />
+            <s:element minOccurs="0" maxOccurs="1" name="recipientName" type="tns:ArrayOfString" />
+            <s:element minOccurs="0" maxOccurs="1" name="senderID" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="smsText" type="tns:ArrayOfString" />
+            <s:element minOccurs="0" maxOccurs="1" name="SMSType" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="Apptype" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="taskName" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="timeOffset" type="s:long" />
+            <s:element minOccurs="1" maxOccurs="1" name="priority" type="s:int" />
+            <s:element minOccurs="0" maxOccurs="1" name="ExternalApplFK" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="ChannelName" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="SendBulkIPSMSDifferentMsgResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="SendBulkIPSMSDifferentMsgResult" type="tns:BulkResult" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="SendMMS">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="userName" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="password" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="ToMobile" type="tns:ArrayOfString" />
+            <s:element minOccurs="0" maxOccurs="1" name="SenderID" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="MMSBytes" type="s:base64Binary" />
+            <s:element minOccurs="0" maxOccurs="1" name="MMSFileName" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="MMSThumbNailBytes" type="s:base64Binary" />
+            <s:element minOccurs="0" maxOccurs="1" name="MMSAttachments" type="tns:ArrayOfBase64Binary" />
+            <s:element minOccurs="0" maxOccurs="1" name="MMSAttFileNames" type="tns:ArrayOfString" />
+            <s:element minOccurs="1" maxOccurs="1" name="isSendSMS" type="s:boolean" />
+            <s:element minOccurs="1" maxOccurs="1" name="isAppendMMSLink" type="s:boolean" />
+            <s:element minOccurs="0" maxOccurs="1" name="SMSText" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="ChannelName" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="appType" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="taskName" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="extApplFK" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="timeOffset" type="s:long" />
+            <s:element minOccurs="1" maxOccurs="1" name="priority" type="s:int" />
+            <s:element minOccurs="1" maxOccurs="1" name="isHTMLMMS" type="s:boolean" />
+            <s:element minOccurs="0" maxOccurs="1" name="MMSText" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="ArrayOfBase64Binary">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="base64Binary" nillable="true" type="s:base64Binary" />
+        </s:sequence>
+      </s:complexType>
+      <s:element name="SendMMSResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="SendMMSResult" type="tns:BulkResult" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetAllChannels">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="username" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetAllChannelsResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetAllChannelsResult" type="tns:ArrayOfString" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+    </s:schema>
+  </wsdl:types>
+  <wsdl:message name="SendSMSSoapIn">
+    <wsdl:part name="parameters" element="tns:SendSMS" />
+  </wsdl:message>
+  <wsdl:message name="SendSMSSoapOut">
+    <wsdl:part name="parameters" element="tns:SendSMSResponse" />
+  </wsdl:message>
+  <wsdl:message name="SendSMS2SoapIn">
+    <wsdl:part name="parameters" element="tns:SendSMS2" />
+  </wsdl:message>
+  <wsdl:message name="SendSMS2SoapOut">
+    <wsdl:part name="parameters" element="tns:SendSMS2Response" />
+  </wsdl:message>
+  <wsdl:message name="SendOTPSMSSoapIn">
+    <wsdl:part name="parameters" element="tns:SendOTPSMS" />
+  </wsdl:message>
+  <wsdl:message name="SendOTPSMSSoapOut">
+    <wsdl:part name="parameters" element="tns:SendOTPSMSResponse" />
+  </wsdl:message>
+  <wsdl:message name="SendOTPSMSWithExpirySoapIn">
+    <wsdl:part name="parameters" element="tns:SendOTPSMSWithExpiry" />
+  </wsdl:message>
+  <wsdl:message name="SendOTPSMSWithExpirySoapOut">
+    <wsdl:part name="parameters" element="tns:SendOTPSMSWithExpiryResponse" />
+  </wsdl:message>
+  <wsdl:message name="SendSMSWithFKSoapIn">
+    <wsdl:part name="parameters" element="tns:SendSMSWithFK" />
+  </wsdl:message>
+  <wsdl:message name="SendSMSWithFKSoapOut">
+    <wsdl:part name="parameters" element="tns:SendSMSWithFKResponse" />
+  </wsdl:message>
+  <wsdl:message name="SendBulkSMSSameMsgSoapIn">
+    <wsdl:part name="parameters" element="tns:SendBulkSMSSameMsg" />
+  </wsdl:message>
+  <wsdl:message name="SendBulkSMSSameMsgSoapOut">
+    <wsdl:part name="parameters" element="tns:SendBulkSMSSameMsgResponse" />
+  </wsdl:message>
+  <wsdl:message name="SendBulkSMSDifferentMsgSoapIn">
+    <wsdl:part name="parameters" element="tns:SendBulkSMSDifferentMsg" />
+  </wsdl:message>
+  <wsdl:message name="SendBulkSMSDifferentMsgSoapOut">
+    <wsdl:part name="parameters" element="tns:SendBulkSMSDifferentMsgResponse" />
+  </wsdl:message>
+  <wsdl:message name="CheckQuotaSoapIn">
+    <wsdl:part name="parameters" element="tns:CheckQuota" />
+  </wsdl:message>
+  <wsdl:message name="CheckQuotaSoapOut">
+    <wsdl:part name="parameters" element="tns:CheckQuotaResponse" />
+  </wsdl:message>
+  <wsdl:message name="SMSUsedSoapIn">
+    <wsdl:part name="parameters" element="tns:SMSUsed" />
+  </wsdl:message>
+  <wsdl:message name="SMSUsedSoapOut">
+    <wsdl:part name="parameters" element="tns:SMSUsedResponse" />
+  </wsdl:message>
+  <wsdl:message name="SendSMSWithExpiryPeriodSoapIn">
+    <wsdl:part name="parameters" element="tns:SendSMSWithExpiryPeriod" />
+  </wsdl:message>
+  <wsdl:message name="SendSMSWithExpiryPeriodSoapOut">
+    <wsdl:part name="parameters" element="tns:SendSMSWithExpiryPeriodResponse" />
+  </wsdl:message>
+  <wsdl:message name="SendBulkIPSMSSameMsgSoapIn">
+    <wsdl:part name="parameters" element="tns:SendBulkIPSMSSameMsg" />
+  </wsdl:message>
+  <wsdl:message name="SendBulkIPSMSSameMsgSoapOut">
+    <wsdl:part name="parameters" element="tns:SendBulkIPSMSSameMsgResponse" />
+  </wsdl:message>
+  <wsdl:message name="SendBulkIPSMSDifferentMsgSoapIn">
+    <wsdl:part name="parameters" element="tns:SendBulkIPSMSDifferentMsg" />
+  </wsdl:message>
+  <wsdl:message name="SendBulkIPSMSDifferentMsgSoapOut">
+    <wsdl:part name="parameters" element="tns:SendBulkIPSMSDifferentMsgResponse" />
+  </wsdl:message>
+  <wsdl:message name="SendMMSSoapIn">
+    <wsdl:part name="parameters" element="tns:SendMMS" />
+  </wsdl:message>
+  <wsdl:message name="SendMMSSoapOut">
+    <wsdl:part name="parameters" element="tns:SendMMSResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetAllChannelsSoapIn">
+    <wsdl:part name="parameters" element="tns:GetAllChannels" />
+  </wsdl:message>
+  <wsdl:message name="GetAllChannelsSoapOut">
+    <wsdl:part name="parameters" element="tns:GetAllChannelsResponse" />
+  </wsdl:message>
+  <wsdl:portType name="mySMS_SQLSoap">
+    <wsdl:operation name="SendSMS">
+      <wsdl:input message="tns:SendSMSSoapIn" />
+      <wsdl:output message="tns:SendSMSSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="SendSMS2">
+      <wsdl:input message="tns:SendSMS2SoapIn" />
+      <wsdl:output message="tns:SendSMS2SoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="SendOTPSMS">
+      <wsdl:input message="tns:SendOTPSMSSoapIn" />
+      <wsdl:output message="tns:SendOTPSMSSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="SendOTPSMSWithExpiry">
+      <wsdl:input message="tns:SendOTPSMSWithExpirySoapIn" />
+      <wsdl:output message="tns:SendOTPSMSWithExpirySoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="SendSMSWithFK">
+      <wsdl:input message="tns:SendSMSWithFKSoapIn" />
+      <wsdl:output message="tns:SendSMSWithFKSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="SendBulkSMSSameMsg">
+      <wsdl:input message="tns:SendBulkSMSSameMsgSoapIn" />
+      <wsdl:output message="tns:SendBulkSMSSameMsgSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="SendBulkSMSDifferentMsg">
+      <wsdl:input message="tns:SendBulkSMSDifferentMsgSoapIn" />
+      <wsdl:output message="tns:SendBulkSMSDifferentMsgSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="CheckQuota">
+      <wsdl:input message="tns:CheckQuotaSoapIn" />
+      <wsdl:output message="tns:CheckQuotaSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="SMSUsed">
+      <wsdl:input message="tns:SMSUsedSoapIn" />
+      <wsdl:output message="tns:SMSUsedSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="SendSMSWithExpiryPeriod">
+      <wsdl:input message="tns:SendSMSWithExpiryPeriodSoapIn" />
+      <wsdl:output message="tns:SendSMSWithExpiryPeriodSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="SendBulkIPSMSSameMsg">
+      <wsdl:input message="tns:SendBulkIPSMSSameMsgSoapIn" />
+      <wsdl:output message="tns:SendBulkIPSMSSameMsgSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="SendBulkIPSMSDifferentMsg">
+      <wsdl:input message="tns:SendBulkIPSMSDifferentMsgSoapIn" />
+      <wsdl:output message="tns:SendBulkIPSMSDifferentMsgSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="SendMMS">
+      <wsdl:input message="tns:SendMMSSoapIn" />
+      <wsdl:output message="tns:SendMMSSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetAllChannels">
+      <wsdl:input message="tns:GetAllChannelsSoapIn" />
+      <wsdl:output message="tns:GetAllChannelsSoapOut" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="mySMS_SQLSoap" type="tns:mySMS_SQLSoap">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="SendSMS">
+      <soap:operation soapAction="http://tempuri.org/SendSMS" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SendSMS2">
+      <soap:operation soapAction="http://tempuri.org/SendSMS2" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SendOTPSMS">
+      <soap:operation soapAction="http://tempuri.org/SendOTPSMS" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SendOTPSMSWithExpiry">
+      <soap:operation soapAction="http://tempuri.org/SendOTPSMSWithExpiry" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SendSMSWithFK">
+      <soap:operation soapAction="http://tempuri.org/SendSMSWithFK" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SendBulkSMSSameMsg">
+      <soap:operation soapAction="http://tempuri.org/SendBulkSMSSameMsg" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SendBulkSMSDifferentMsg">
+      <soap:operation soapAction="http://tempuri.org/SendBulkSMSDifferentMsg" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CheckQuota">
+      <soap:operation soapAction="http://tempuri.org/CheckQuota" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SMSUsed">
+      <soap:operation soapAction="http://tempuri.org/SMSUsed" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SendSMSWithExpiryPeriod">
+      <soap:operation soapAction="http://tempuri.org/SendSMSWithExpiryPeriod" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SendBulkIPSMSSameMsg">
+      <soap:operation soapAction="http://tempuri.org/SendBulkIPSMSSameMsg" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SendBulkIPSMSDifferentMsg">
+      <soap:operation soapAction="http://tempuri.org/SendBulkIPSMSDifferentMsg" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SendMMS">
+      <soap:operation soapAction="http://tempuri.org/SendMMS" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetAllChannels">
+      <soap:operation soapAction="http://tempuri.org/GetAllChannels" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:binding name="mySMS_SQLSoap12" type="tns:mySMS_SQLSoap">
+    <soap12:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="SendSMS">
+      <soap12:operation soapAction="http://tempuri.org/SendSMS" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SendSMS2">
+      <soap12:operation soapAction="http://tempuri.org/SendSMS2" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SendOTPSMS">
+      <soap12:operation soapAction="http://tempuri.org/SendOTPSMS" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SendOTPSMSWithExpiry">
+      <soap12:operation soapAction="http://tempuri.org/SendOTPSMSWithExpiry" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SendSMSWithFK">
+      <soap12:operation soapAction="http://tempuri.org/SendSMSWithFK" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SendBulkSMSSameMsg">
+      <soap12:operation soapAction="http://tempuri.org/SendBulkSMSSameMsg" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SendBulkSMSDifferentMsg">
+      <soap12:operation soapAction="http://tempuri.org/SendBulkSMSDifferentMsg" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CheckQuota">
+      <soap12:operation soapAction="http://tempuri.org/CheckQuota" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SMSUsed">
+      <soap12:operation soapAction="http://tempuri.org/SMSUsed" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SendSMSWithExpiryPeriod">
+      <soap12:operation soapAction="http://tempuri.org/SendSMSWithExpiryPeriod" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SendBulkIPSMSSameMsg">
+      <soap12:operation soapAction="http://tempuri.org/SendBulkIPSMSSameMsg" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SendBulkIPSMSDifferentMsg">
+      <soap12:operation soapAction="http://tempuri.org/SendBulkIPSMSDifferentMsg" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SendMMS">
+      <soap12:operation soapAction="http://tempuri.org/SendMMS" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetAllChannels">
+      <soap12:operation soapAction="http://tempuri.org/GetAllChannels" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="mySMS_SQL">
+    <wsdl:port name="mySMS_SQLSoap" binding="tns:mySMS_SQLSoap">
+      <soap:address location="https://trial.rapidsms.net/api/mysms.asmx" />
+    </wsdl:port>
+    <wsdl:port name="mySMS_SQLSoap12" binding="tns:mySMS_SQLSoap12">
+      <soap12:address location="https://trial.rapidsms.net/api/mysms.asmx" />
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

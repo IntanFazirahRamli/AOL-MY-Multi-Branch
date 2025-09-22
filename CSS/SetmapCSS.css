@@ -1,0 +1,24 @@
+﻿/*#sidebar {
+  width: 20%;
+  float: left;
+}*/
+#main {
+  width: 100%;
+  float: left;
+}
+#map {
+  width: 100%;
+  height: 600px;
+}
+.drag {
+  cursor: pointer;
+}
+#data {
+  width: 90%;
+  height: 200px;
+}
+
+.myDivIcon {
+  text-align: center; /* Horizontally center the text (icon) */
+  line-height: 20px; /* Vertically center the text (icon) */
+}

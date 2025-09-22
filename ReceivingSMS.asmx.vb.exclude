@@ -1,0 +1,103 @@
+﻿Imports System.Web.Services
+Imports System.Web.Services.Protocols
+Imports System.ComponentModel
+Imports System
+Imports System.Data
+Imports MySql.Data
+Imports MySql.Data.MySqlClient
+
+' To allow this Web Service to be called from script, using ASP.NET AJAX, uncomment the following line.
+' <System.Web.Script.Services.ScriptService()> _
+<System.Web.Services.WebService(Namespace:="http://tempuri.org/")> _
+<System.Web.Services.WebServiceBinding(ConformsTo:=WsiProfiles.BasicProfile1_1)> _
+<ToolboxItem(False)> _
+Public Class ReceivingSMS
+    Inherits System.Web.Services.WebService
+
+    <WebMethod()> _
+    Public Function HelloWorld() As String
+       Return "Hello World"
+    End Function
+
+    <WebMethod()> _
+    Public Function IncomingSMS(FromMobile As String, smsText As String, ReceiveDateTime As Long, smscAddress As String, smscDateTime As Long) As String
+        Try
+
+            Dim conn As MySqlConnection = New MySqlConnection()
+
+            conn.ConnectionString = ConfigurationManager.ConnectionStrings("sitadataConnectionString").ConnectionString
+            conn.Open()
+
+            '''''''''''''''''''''''''
+
+            Dim command1 As MySqlCommand = New MySqlCommand
+
+            command1.CommandType = CommandType.Text
+            'command1.CommandText = "UPDATE tblServiceRecord SET OurRef = @OurRef,LastModifiedBy = @LastModifiedBy, LastModifiedOn=@LastModifiedOn where ContractNo = '" & txtContractNo.Text & "' and Status = 'O'"
+            command1.CommandText = "INSERT INTO tblSMS (RecordNo, ToMobile, Message, CreatedBy, CreatedOn,  LastModifiedBy, lastModifiedOn) Values (@RecordNo, @ToMobile, @Message, @CreatedBy, @CreatedOn,  @LastModifiedBy, @LastModifiedOn) "
+
+            command1.Parameters.Clear()
+
+
+            command1.Parameters.AddWithValue("@RecordNo", "")
+            command1.Parameters.AddWithValue("@ToMobile", FromMobile)
+            command1.Parameters.AddWithValue("@Message", smsText)
+
+            command1.Parameters.AddWithValue("@CreatedBy", "Received")
+            command1.Parameters.AddWithValue("@CreatedOn", Convert.ToDateTime(ReceiveDateTime))
+            command1.Parameters.AddWithValue("@LastModifiedBy", "")
+            command1.Parameters.AddWithValue("@LastModifiedOn", Convert.ToDateTime(ReceiveDateTime))
+
+            command1.Connection = conn
+
+            command1.ExecuteNonQuery()
+            command1.Dispose()
+
+            ''''''''''''''''''''''
+            conn.Close()
+            conn.Dispose()
+            command1.Dispose()
+
+            '    CType(Me.Master, MasterPage).EventLog_Insert(Session("UserID"), "SERV", lblRecordNo.Text, "SMS", DateTime.Now.ToString("yyyy-MM-dd hh:mm:ss", New System.Globalization.CultureInfo("en-GB")), 0, 0, 0, "", "", txtRcno.Text)
+
+            conn.Close()
+            '  Return "YES"
+        Catch ex As Exception
+            InsertIntoTblWebEventLog("ReceiveSMS", ex.Message.ToString, FromMobile)
+        End Try
+
+        Return smsText
+
+    End Function
+
+
+    Public Sub InsertIntoTblWebEventLog(events As String, errorMsg As String, ID As String)
+        Try
+            Dim conn As New MySqlConnection()
+            conn.ConnectionString = ConfigurationManager.ConnectionStrings("sitadataConnectionString").ConnectionString
+
+            Dim insCmds As New MySqlCommand()
+            insCmds.CommandType = CommandType.Text
+
+            Dim insQuery As String = "Insert into tblWebEventLog(LoginId, Event, Error,ID, CreatedOn)"
+            insQuery += " values(@LoginId,@Event,@Error,@ID,@CreatedOn);"
+
+            insCmds.CommandText = insQuery
+
+            insCmds.Parameters.Clear()
+            insCmds.Parameters.AddWithValue("@LoginId", "EMAIL - " + Session("UserID"))
+            insCmds.Parameters.AddWithValue("@Event", events)
+            insCmds.Parameters.AddWithValue("@Error", errorMsg)
+            insCmds.Parameters.AddWithValue("@ID", ID)
+            insCmds.Parameters.AddWithValue("@CreatedOn", DateTime.Now.ToString("yyyy-MM-dd hh:mm:ss", New System.Globalization.CultureInfo("en-GB")))
+
+            conn.Open()
+            insCmds.Connection = conn
+            insCmds.ExecuteNonQuery()
+            conn.Close()
+            conn.Dispose()
+        Catch ex As Exception
+            InsertIntoTblWebEventLog("InsertIntoTblWebEventLog", ex.Message.ToString, "")
+        End Try
+    End Sub
+End Class

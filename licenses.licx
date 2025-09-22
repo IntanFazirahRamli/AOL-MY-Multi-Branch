@@ -1,0 +1,15 @@
+DevExpress.XtraCharts.Web.WebChartControl, DevExpress.XtraCharts.v17.2.Web, Version=17.2.12.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a
+DevExpress.Web.ASPxScheduler.ASPxScheduler, DevExpress.Web.ASPxScheduler.v17.2, Version=17.2.12.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a
+Telerik.Web.UI.RadScheduler, Telerik.Web.UI, Version=2017.1.228.40, Culture=neutral, PublicKeyToken=121fae78165ba3d4
+Telerik.Web.UI.RadPanelBar, Telerik.Web.UI, Version=2017.1.228.40, Culture=neutral, PublicKeyToken=121fae78165ba3d4
+Telerik.Web.UI.RadSplitBar, Telerik.Web.UI, Version=2017.1.228.40, Culture=neutral, PublicKeyToken=121fae78165ba3d4
+Telerik.Web.UI.RadCalendar, Telerik.Web.UI, Version=2017.1.228.40, Culture=neutral, PublicKeyToken=121fae78165ba3d4
+Telerik.Web.UI.RadPane, Telerik.Web.UI, Version=2017.1.228.40, Culture=neutral, PublicKeyToken=121fae78165ba3d4
+Telerik.Web.UI.RadSplitter, Telerik.Web.UI, Version=2017.1.228.40, Culture=neutral, PublicKeyToken=121fae78165ba3d4
+Telerik.Web.UI.RadScriptBlock, Telerik.Web.UI, Version=2017.1.228.40, Culture=neutral, PublicKeyToken=121fae78165ba3d4
+Telerik.Web.UI.RadSkinManager, Telerik.Web.UI, Version=2017.1.228.40, Culture=neutral, PublicKeyToken=121fae78165ba3d4
+Telerik.Web.UI.RadScriptManager, Telerik.Web.UI, Version=2017.1.228.40, Culture=neutral, PublicKeyToken=121fae78165ba3d4
+Telerik.Web.UI.RadClientDataSource, Telerik.Web.UI, Version=2017.1.228.40, Culture=neutral, PublicKeyToken=121fae78165ba3d4
+Telerik.Web.UI.RadHtmlChart, Telerik.Web.UI, Version=2017.1.228.40, Culture=neutral, PublicKeyToken=121fae78165ba3d4
+Telerik.ReportViewer.Html5.WebForms.ReportViewer, Telerik.ReportViewer.Html5.WebForms, Version=11.0.17.406, Culture=neutral, PublicKeyToken=a9d7983dfcc261be
+Telerik.Web.UI.RadChart, Telerik.Web.UI, Version=2017.1.228.40, Culture=neutral, PublicKeyToken=121fae78165ba3d4

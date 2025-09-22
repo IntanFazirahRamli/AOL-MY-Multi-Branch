@@ -1,0 +1,6 @@
+# Ignore all bin directories
+bin/
+**/bin/
+
+# Or ignore specific bin files
+*.bin

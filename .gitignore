@@ -5,5 +5,12 @@ bin/
 # Or ignore specific bin files
 *.bin
 
+# Visual Studio solution and user-specific files
+*.sln
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+
 # Ignore Web config
 web.config
